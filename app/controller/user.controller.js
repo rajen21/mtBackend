@@ -43,6 +43,16 @@ export async function findOneUser (req, res) {
     }) 
 };
 
+export async function getAllUsers (req, res) {
+    User.find()
+    .then((users) => {
+        res.send(users);
+    })
+    .catch(err => {
+        res.status(500).send(err);
+    })
+}
+
 export async function updateUser (req, res) {
     if (!req.body) {
         req.status(500).send({message: "Please enter valid data"});
