@@ -18,15 +18,17 @@ export async function createUser (req, res) {
     }
 
     const hashPass = await bcrypt.hash(req.body.password,15);
-    
+
     const userData = { user_name, password: hashPass, role, active };
-    if (req.body.adminId) {
+    if (role === "agent") {
         const validAdminId = await User.findById(req.body.adminId);
         userData.adminId = validAdminId;
     };
-    if (req.body.agentId) {
+    if (role === "user") {
+        const validAdminId = await User.findById(req.body.adminId);
         const validAgentId = await User.findById(req.body.agentId);
         userData.agentId = validAgentId;
+        userData.adminId = validAdminId;
     }
 
     const user = new User(userData);
