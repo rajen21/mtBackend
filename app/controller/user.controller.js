@@ -5,12 +5,10 @@ import db from "../models/index.js";
 const User = db.user;
 
 export async function createUser (req, res) {
-    const {user_name, email, password, role,active} = req.body;
+    const {user_name, password, role,active} = req.body;
 
     if (!user_name) {
         return res.status(400).send({ message: "user name is required" });
-    } else if (!email) {
-        return res.status(400).send({ message: "email is required" });
     } else if (!password) {
         return res.status(400).send({ message: "password is required" });
     } else if (!role) {
@@ -20,8 +18,18 @@ export async function createUser (req, res) {
     }
 
     const hashPass = await bcrypt.hash(req.body.password,15);
+    
+    const userData = { user_name, password: hashPass, role, active };
+    if (req.body.adminId) {
+        const validAdminId = await User.findById(req.body.adminId);
+        userData.adminId = validAdminId;
+    };
+    if (req.body.agentId) {
+        const validAgentId = await User.findById(req.body.agentId);
+        userData.agentId = validAgentId;
+    }
 
-    const user = new User({ user_name, password: hashPass, email, role, active });
+    const user = new User(userData);
 
     user.save()
     .then((data) => {

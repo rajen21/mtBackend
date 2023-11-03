@@ -6,10 +6,10 @@ const User = db.user;
 
 export async function loginUser (req, res) {
     try {
-        const {_id, user_name, password, email, role, active} = await User.findOne({email: req.body.email});
+        const {_id, user_name, password, role, active} = await User.findOne({user_name: req.body.user_name});
         const isPasswordValid = await bcrypt.compare(req.body.password, password);
         if (isPasswordValid) {
-            const token = jwt.sign({_id, user_name, password, email, role, active}, "secret123");
+            const token = jwt.sign({_id, user_name, password, role, active}, "secret123");
             return res.json({token});
         } else {
             return res.status(500).send("Please enter valid password");
