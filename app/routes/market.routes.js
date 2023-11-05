@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { PatchMarketData } from "../controller/market.controller.js";
+import { PatchMarketData, getMarketData, getSpecificDateData } from "../controller/market.controller.js";
 
 export default (app) => {
     const router = Router();
-    router.patch("/", PatchMarketData);
+    router.post("/", PatchMarketData);
+    router.get("/", getMarketData);
+    router.get("/get-data", getSpecificDateData);
     
     app.use("/market-data", router);
 }
