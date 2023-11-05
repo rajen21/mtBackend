@@ -10,7 +10,7 @@ export async function loginUser (req, res) {
         const isPasswordValid = await bcrypt.compare(req.body.password, password);
         if (isPasswordValid) {
             const token = jwt.sign({_id, user_name, password, role, active}, "secret123");
-            return res.json({token});
+            return res.json({token, _id, user_name, role, active});
         } else {
             return res.status(500).send("Please enter valid password");
         }
