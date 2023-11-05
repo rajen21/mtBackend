@@ -37,7 +37,7 @@ export default (mongoose) => {
         type: String
     },
     date: {
-        type: Date,
+        type: String,
         unique: true
     }
   });
