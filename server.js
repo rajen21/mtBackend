@@ -1,16 +1,27 @@
 import express from "express";
 import "dotenv/config.js";
-import db from "./app/models/index.js";
+import cors from "cors";
 
+import db from "./app/models/index.js";
 import userRoutes from "./app/routes/user.routes.js";
 import loginRoutes from "./app/routes/login.routes.js";
 import marketRoutes from "./app/routes/market.routes.js";
 
 const app = express();
 
+const corsOptions = {
+    origin: "*"
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
-db.mongoose.connect(db.url)
+app.use(express.urlencoded({ extended: true }));
+
+db.mongoose.connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 .then(data => {
     console.log("Successfully connected to db!!");
 })
