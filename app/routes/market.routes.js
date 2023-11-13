@@ -5,7 +5,7 @@ export default (app) => {
     const router = Router();
     router.post("/", PatchMarketData);
     router.get("/", getMarketData);
-    router.get("/get-data/:date", getSpecificDateData);
+    router.post("/get-data", getSpecificDateData);
     
     app.use("/market-data", router);
 }
