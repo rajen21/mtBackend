@@ -2,8 +2,7 @@ import db from "../models/index.js";
 const MarketData = db.marketData;
 
 export async function PatchMarketData(req, res) {
-  const tempData = { ...req.body, date: new Date().toDateString() };
-  console.log("check dateee ::: ", tempData.date);
+  const tempData = { ...req.body };
 
   await MarketData.find({ date: tempData.date }).then((existingData) => {
     if (existingData.length) {
