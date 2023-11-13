@@ -32,9 +32,9 @@ export async function getMarketData (req, res) {
 };
 
 export async function getSpecificDateData(req, res) {
-  const {filter} = req.body;
-  console.log("ffiif", filter, req.body, req.params);
-  MarketData.findOne(filter)
+  const {date} = req.params;
+  console.log("ffiif", date, req.params);
+  MarketData.findOne(date)
   .then((data) => res.send(data))
   .catch((err) => res.status(500).send(err));
 };
