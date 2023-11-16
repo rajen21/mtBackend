@@ -28,6 +28,9 @@ export default (mongoose) => {
       type: Boolean,
       required: true,
     },
+    balance: {
+      type: Number
+    }
   });
   schema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
