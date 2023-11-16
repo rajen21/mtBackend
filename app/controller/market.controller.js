@@ -33,7 +33,6 @@ export async function getMarketData (req, res) {
 
 export async function getSpecificDateData(req, res) {
   const {date} = req.body;
-  console.log("ffiif", date, req.body);
   MarketData.findOne(date)
   .then((data) => res.send(data))
   .catch((err) => res.status(500).send(err));
