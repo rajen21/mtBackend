@@ -14,7 +14,7 @@ export default (mongoose) => {
     },
     adminId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     agentId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +29,8 @@ export default (mongoose) => {
       required: true,
     },
     balance: {
-      type: Number
+      type: Number,
+      default: 0,
     }
   });
   schema.method("toJSON", function () {
