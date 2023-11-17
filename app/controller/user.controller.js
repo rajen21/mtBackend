@@ -86,7 +86,7 @@ export async function updateUser (req, res) {
         return res.json(data);
     })
     .catch(err => {
-        return res.status(500).send("error while updating user");
+        return res.status(500).send("error while updating user", err);
     })
 };
 
@@ -101,3 +101,21 @@ export async function deleteUser (req, res) {
     })
 };
 
+
+export async function addBalance(req, res) {
+    const { id } = req.params;
+    const {amount} = req.body;
+
+    try {
+        if (amount > 300) {
+            User.findByIdAndUpdate(id, {balance: amount})
+            .then(data => {
+                return res.send(data);
+            });
+        }
+        throw new Error;
+    } catch (err) {
+        return res.status(500).send("Error while adding balance", err);
+    }
+    
+}
