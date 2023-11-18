@@ -54,14 +54,14 @@ export async function findOneUser(req, res) {
     });
 }
 
-export async function getAllUsers(req, res) {
-  User.find()
-    .then((users) => {
-      res.send(users);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+export async function getAgentAssociatedUsers(req, res) {
+  try {
+    const { agentId } = req.params;
+    const associatedUsers = await User.find({agentId});
+    res.send(associatedUsers);
+  } catch (err) {
+    res.status(500).send(err)
+  }
 }
 
 export async function updateUser(req, res) {
