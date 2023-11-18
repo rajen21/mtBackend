@@ -6,15 +6,15 @@ import {
   deleteUser,
   findOneUser,
   updateUser,
-  getAllUsers,
+  getAgentAssociatedUsers,
   addBalance,
   removeBalance,
 } from "../controller/user.controller.js";
 
 export default (app) => {
   const router = Router();
+  router.get("/associated-users/:agentId", getAgentAssociatedUsers);
   router.get("/:id", findOneUser);
-  router.get("/", getAllUsers);
   router.post("/", validUser(createUserSchema), createUser);
   router.patch("/add-balance/:id", addBalance);
   router.patch("/remove-balance/:id", removeBalance);
