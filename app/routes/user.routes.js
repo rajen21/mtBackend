@@ -8,6 +8,7 @@ import {
   updateUser,
   getAllUsers,
   addBalance,
+  removeBalance,
 } from "../controller/user.controller.js";
 
 export default (app) => {
@@ -16,6 +17,7 @@ export default (app) => {
   router.get("/", getAllUsers);
   router.post("/", validUser(createUserSchema), createUser);
   router.patch("/add-balance/:id", addBalance);
+  router.patch("/remove-balance/:id", removeBalance);
   router.patch("/:id", updateUser);
   router.delete("/:id", deleteUser);
   app.use("/user", router);
