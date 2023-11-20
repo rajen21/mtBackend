@@ -45,7 +45,7 @@ export async function createUser(req, res) {
 
 export async function findOneUser(req, res) {
   const { id } = req.params;
-  User.findById(id)
+  User.findById(id, {password: 0})
     .then((data) => {
       res.send(data);
     })
