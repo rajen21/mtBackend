@@ -21,7 +21,7 @@ export default (mongoose) => {
     agentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
-      required: true,
+      // required: true,
     },
   });
   schema.method("toJSON", function () {
