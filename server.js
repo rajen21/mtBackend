@@ -6,6 +6,7 @@ import db from "./app/models/index.js";
 import userRoutes from "./app/routes/user.routes.js";
 import loginRoutes from "./app/routes/login.routes.js";
 import marketRoutes from "./app/routes/market.routes.js";
+import statementRoutes from "./app/routes/statement.routes.js";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.get("/", (req, res) => {
 loginRoutes(app);
 userRoutes(app);
 marketRoutes(app);
+statementRoutes(app);
 
 const PORT = parseInt(process.env.PORT || 8081);
 

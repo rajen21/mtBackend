@@ -57,10 +57,10 @@ export async function findOneUser(req, res) {
 export async function getAgentAssociatedUsers(req, res) {
   try {
     const { agentId } = req.params;
-    const associatedUsers = await User.find({agentId});
+    const associatedUsers = await User.find({ agentId });
     res.send(associatedUsers);
   } catch (err) {
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 }
 
@@ -82,7 +82,7 @@ export async function updateUser(req, res) {
       patchUser.password = newHashedPassword;
     }
   }
-  User.findByIdAndUpdate(req.params.id, patchUser)
+  User.findByIdAndUpdate(req.params.id, patchUser, { new: true })
     .then((data) => {
       return res.json(data);
     })
