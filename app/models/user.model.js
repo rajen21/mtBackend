@@ -22,6 +22,7 @@ export default (mongoose) => {
     },
     role: {
       type: String,
+      enum: ["user", "agent", "admin"],
       required: true,
     },
     active: {

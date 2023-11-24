@@ -6,5 +6,5 @@ export const createUserSchema = yup.object().shape({
     adminId: yup.string(),
     agentId: yup.string(),
     role: yup.string().required(),
-    active: yup.boolean().required()
+    active: yup.boolean()
 });
