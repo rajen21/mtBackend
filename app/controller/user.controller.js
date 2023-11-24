@@ -6,7 +6,7 @@ const User = db.user;
 
 export async function createUser(req, res) {
   try {
-    const { user_name, password, role, active } = req.body;
+    const { user_name, password, role } = req.body;
 
     if (!user_name) {
       return res.status(400).send({ message: "user name is required" });
@@ -14,13 +14,11 @@ export async function createUser(req, res) {
       return res.status(400).send({ message: "password is required" });
     } else if (!role) {
       return res.status(400).send({ message: "role is required" });
-    } else if (!active) {
-      return res.status(400).send({ message: "active is required" });
     }
 
     const hashPass = await bcrypt.hash(req.body.password, 15);
 
-    const userData = { user_name, password: hashPass, role, active };
+    const userData = { user_name, password: hashPass, role };
     if (role === "agent") {
       const validAdminId = await User.findById(req.body.adminId);
       userData.adminId = validAdminId;

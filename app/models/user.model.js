@@ -26,7 +26,6 @@ export default (mongoose) => {
     },
     active: {
       type: Boolean,
-      required: true,
     },
     balance: {
       type: Number,
