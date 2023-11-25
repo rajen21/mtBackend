@@ -55,7 +55,7 @@ export async function findOneUser(req, res) {
 export async function getAgentAssociatedUsers(req, res) {
   try {
     const { agentId } = req.params;
-    const associatedUsers = await User.find({ agentId });
+    const associatedUsers = await User.find({ agentId }, { password: 0 });
     return res.send(associatedUsers);
   } catch (err) {
     return res.status(500).send(err);
