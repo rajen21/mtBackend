@@ -54,6 +54,7 @@ export async function findOneUser(req, res) {
 
 export async function getAgentAssociatedUsers(req, res) {
   try {
+    console.log("check query :: ", req.query);
     const associatedUsers = await User.find(req.query, { password: 0 });
     return res.send(associatedUsers);
   } catch (err) {
