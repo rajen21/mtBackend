@@ -13,7 +13,7 @@ import {
 
 export default (app) => {
   const router = Router();
-  router.get("/associated-users/:agentId", getAgentAssociatedUsers);
+  router.get("/associated-users", getAgentAssociatedUsers);
   router.get("/:id", findOneUser);
   router.post("/", validUser(createUserSchema), createUser);
   router.patch("/add-balance/:id", addBalance);
