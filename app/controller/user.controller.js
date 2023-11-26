@@ -54,10 +54,10 @@ export async function findOneUser(req, res) {
 
 export async function getAgentAssociatedUsers(req, res) {
   try {
-    console.log("checkk111 :: ", req.query);
+    console.log("checkk111 :: ", new RegExp(req.query.user_name, "i"), req.query.user_name);
     const filter = { agentId: req.query.agentId };
     if (!!req.query.user_name) {
-      filter.user_name = { $regex: `/${req.query.user_name}/i` };
+      filter.user_name = { $regex: new RegExp(req.query.user_name, "i") };
     }
     console.log("check filter: :::", filter);
     const associatedUsers = await User.find(filter, { password: 0 });
