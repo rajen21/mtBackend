@@ -55,7 +55,7 @@ export async function findOneUser(req, res) {
 export async function getAgentAssociatedUsers(req, res) {
   try {
     console.log("checkk111 :: ", req.query);
-    const filter = { agentId: req.query.id };
+    const filter = { agentId: req.query.agentId };
     if (!!req.query.user_name) {
       filter.user_name = { $regex: `/${req.query.user_name}/i` };
     }
