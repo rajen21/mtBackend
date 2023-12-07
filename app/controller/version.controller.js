@@ -3,12 +3,12 @@ import db from "../models/index.js";
 const Version = db.version;
 
 export async function updateVersion(req, res) {
-  const { version, message } = req.body;
-  const { id } = req.params;
   try {
+    const { version, message } = req.body;
+    const [{ _id }] = await Version.find();
     const response = await Version.findByIdAndUpdate(
-      id,
-      { version, message },
+      _id,
+      { version, message, date: new Date() },
       { new: true }
     );
     return res.send(response);
@@ -19,8 +19,7 @@ export async function updateVersion(req, res) {
 
 export async function getVersion(req, res) {
   try {
-    const { id } = req.params;
-    const response = await Version.findById(id);
+    const [response] = await Version.find();
     return res.send(response);
   } catch (err) {
     return res.status(500).send("Error occured while getting version");
