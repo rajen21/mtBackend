@@ -6,6 +6,9 @@ export default (mongoose) => {
     message: {
       type: String,
     },
+    link: {
+      type: String,
+    },
     date: {
       type: String,
       default: Date.now,
