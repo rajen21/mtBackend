@@ -7,6 +7,7 @@ import userRoutes from "./app/routes/user.routes.js";
 import loginRoutes from "./app/routes/login.routes.js";
 import marketRoutes from "./app/routes/market.routes.js";
 import statementRoutes from "./app/routes/statement.routes.js";
+import versionRoute from "./app/routes/version.routes.js";
 
 const app = express();
 
@@ -39,6 +40,7 @@ loginRoutes(app);
 userRoutes(app);
 marketRoutes(app);
 statementRoutes(app);
+versionRoute(app);
 
 const PORT = parseInt(process.env.PORT || 8081);
 

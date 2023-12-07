@@ -54,16 +54,14 @@ export async function findOneUser(req, res) {
 
 export async function getAgentAssociatedUsers(req, res) {
   try {
-    console.log("checkk111 :: ", new RegExp(req.query.user_name, "i"), req.query.user_name);
     const filter = { agentId: req.query.agentId };
     if (!!req.query.user_name) {
       filter.user_name = { $regex: new RegExp(req.query.user_name, "i") };
     }
-    console.log("check filter: :::", filter);
     const associatedUsers = await User.find(filter, { password: 0 });
     return res.send(associatedUsers);
   } catch (err) {
-    return res.status(500).send("No users found!");
+    return res.status(500).send("Error occured while fetching users!");
   }
 }
 
