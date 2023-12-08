@@ -8,6 +8,10 @@ export default (mongoose) => {
       type: String,
       required: true,
     },
+    game_type: {
+      type: String,
+      required: true,
+    },
     digit: {
       type: String,
       required: true,
