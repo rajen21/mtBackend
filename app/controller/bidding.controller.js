@@ -31,7 +31,15 @@ export async function postBidding(req, res) {
       return;
     }
 
-    const bid = new Bidding({ market_name, game_name, digit, points, userId, game_type });
+    const bid = new Bidding({
+      market_name,
+      game_name,
+      digit,
+      points,
+      userId,
+      game_type,
+      date: req.body.date,
+    });
 
     const response = await bid.save();
     res.send(response);

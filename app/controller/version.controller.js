@@ -4,11 +4,11 @@ const Version = db.version;
 
 export async function updateVersion(req, res) {
   try {
-    const { version, message } = req.body;
+    const { version, message, date } = req.body;
     const [{ _id }] = await Version.find();
     const response = await Version.findByIdAndUpdate(
       _id,
-      { version, message, date: new Date() },
+      { version, message, date },
       { new: true }
     );
     return res.send(response);
