@@ -11,7 +11,7 @@ export default (mongoose) => {
     },
     type: {
       type: String,
-      enum: ["addition", "withdrawal"], // Type of transaction
+      enum: ["Added", "Withdrawal", "Played game", "Won"], // Type of transaction
       required: true,
     },
     date: {
