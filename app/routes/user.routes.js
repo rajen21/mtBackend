@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createUserSchema } from "../validations/user.validation.js";
 import { validUser } from "../middleware/user.middleware.js";
+import { jwtTokenValidate } from "../middleware/auth.middleware.js";
 import {
   createUser,
   deleteUser,
@@ -13,12 +14,12 @@ import {
 
 export default (app) => {
   const router = Router();
-  router.get("/associated-users", getAgentAssociatedUsers);
-  router.get("/:id", findOneUser);
-  router.post("/", validUser(createUserSchema), createUser);
-  router.patch("/add-balance/:id", addBalance);
-  router.patch("/remove-balance/:id", removeBalance);
-  router.patch("/:id", updateUser);
-  router.delete("/:id", deleteUser);
+  router.get("/associated-users", jwtTokenValidate, getAgentAssociatedUsers);
+  router.get("/:id", jwtTokenValidate, findOneUser);
+  router.post("/", validUser(createUserSchema), jwtTokenValidate,createUser,);
+  router.patch("/add-balance/:id", jwtTokenValidate, addBalance);
+  router.patch("/remove-balance/:id", jwtTokenValidate, removeBalance);
+  router.patch("/:id", jwtTokenValidate, updateUser);
+  router.delete("/:id", jwtTokenValidate, deleteUser);
   app.use("/user", router);
 };
