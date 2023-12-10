@@ -18,7 +18,9 @@ export async function loginUser(req, res) {
     } = await User.findOne({ user_name: req.body.user_name });
 
     if (!active) {
-      return res.status(403).send("Your account is currently inactive. Please contact support for assistance.");
+      return res.status(403).send({
+        inactivity :"Your account is currently inactive. Please contact support for assistance."
+      });
     }
 
     let agent;
@@ -27,13 +29,17 @@ export async function loginUser(req, res) {
     if (role === "user") {
       agent = await User.findById(agentId);
       if (!agent.active) {
-        return res.status(403).send("The administrator account is currently inactive. Please contact support for assistance.");
+        return res.status(403).send({
+          inactivity: "The administrator account is currently inactive. Please contact support for assistance."
+        });
       }
     }
     if (role !== "admin") {
       admin = await User.findById(adminId);
       if (!admin.active) {
-        return res.status(403).send("The server is currently undergoing maintenance. We apologize for any inconvenience. Please try again later.");
+        return res.status(403).send({
+          inactivity: "The server is currently undergoing maintenance. We apologize for any inconvenience. Please try again later."
+        });
       }
     }
 
