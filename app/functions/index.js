@@ -1,5 +1,5 @@
-import { winRates } from "./rates";
-import { addWinningAmount } from "../controller/user.controller";
+import { winRates } from "./rates.js";
+import { addWinningAmount } from "../controller/user.controller.js";
 
 export async function getResult(Biddings, filter, data) {
   try {
