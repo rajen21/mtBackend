@@ -197,8 +197,7 @@ export default (mongoose) => {
       },
     },
     date: {
-      type: Date,
-      default: new Date().toDateString(),
+      type: String,
     },
   });
   schema.method("toJSON", function () {
