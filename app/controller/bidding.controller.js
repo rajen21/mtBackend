@@ -50,7 +50,7 @@ export async function postBidding(req, res) {
 export async function getBidding(req, res) {
   try {
     const filter = req.params;
-    const response = await Bidding.find(filter);
+    const response = await Bidding.find(filter).sort({date: -1, time:-1});
     res.send(response);
   } catch (err) {
     res.status(500).send("Error occured while getting bids");
