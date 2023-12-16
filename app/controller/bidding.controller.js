@@ -4,8 +4,7 @@ const Bidding = db.bidding;
 
 export async function postBidding(req, res) {
   try {
-    const { market_name, game_name, digit, points, userId, game_type } =
-      req.body;
+    const { market_name, game_name, digit, points, userId, game_type } = req.body;
     if (!market_name) {
       res.status(500).send("Please enter market name");
       return;
