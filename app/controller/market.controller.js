@@ -17,7 +17,7 @@ export async function PatchMarketData(req, res) {
 
         return await MarketData.updateOne(
           { date: date },
-          { $set: tempData },
+          { $set: {...tempData, date} },
           { new: true }
         )
           .then(async (data) => {
@@ -35,7 +35,7 @@ export async function PatchMarketData(req, res) {
           })
           .catch((err) => res.status(500).send(err));
       } else {
-        const market_data = new MarketData(tempData);
+        const market_data = new MarketData({...tempData, date});
         return await market_data
           .save()
           .then(async (data) => {
