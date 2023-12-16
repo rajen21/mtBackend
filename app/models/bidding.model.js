@@ -28,6 +28,9 @@ export default (mongoose) => {
     date: {
       type: String,
     },
+    time: {
+      type: String,
+    },
   });
   schema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
