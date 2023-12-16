@@ -1,45 +1,177 @@
 export default (mongoose) => {
   const schema = mongoose.Schema({
     time: {
+      open: {
         type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     kalyan: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     kalyanMorning: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     kalyanNight: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     milanDay: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     milanNight: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     rajdhaniDay: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     rajdhaniNight: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     mainBazar: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     milanBazarMorning: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     milanBazarDay: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     milanBazarNight: {
-        type: String
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
     },
     date: {
-        type: String,
-        unique: true
-    }
+      type: Date,
+      default: new Date().toDateString(),
+    },
   });
   schema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();

@@ -148,3 +148,17 @@ export async function removeBalance(req, res) {
     return res.status(500).send("Error while removing balance", err);
   }
 }
+
+export async function addWinningAmount(userData) {
+  try {
+    const foundUser = await User.findById(userData.userId);
+    let totalAmount = parseFloat(foundUser.balance);
+    if (foundUser) {
+      totalAmount += parseFloat(userData.amount);
+      await findByIdAndUpdate(userData.userId, { balance: totalAmount });
+      // { new: true }
+    }
+  } catch (err) {
+    console.error("error while adding winning amount:: , ", userData);
+  }
+}

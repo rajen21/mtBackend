@@ -26,8 +26,7 @@ export default (mongoose) => {
       required: true,
     },
     date: {
-      type: Date,
-      default: Date.now,
+      type: String,
     },
   });
   schema.method("toJSON", function () {
