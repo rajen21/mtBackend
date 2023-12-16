@@ -27,7 +27,7 @@ export async function getResult(filter, data) {
               amount: winRates(parseFloat(bid.points), bid.game_name),
             });
           }
-        } else if (bid.game_name === "singlePatti" || bid.game_name === "doublePatti" || bid.game_name === "triplePatti") {
+        } else if (bid.game_name === "singlePannel" || bid.game_name === "doublePannel" || bid.game_name === "triplePannel") {
           if (data.close.slice(0, 3) === bid.digit) {
             console.log("close winner ", bid.game_name, " ", bid.userId);
             await addWinningAmount({
@@ -55,7 +55,7 @@ export async function getResult(filter, data) {
               amount: winRates(parseFloat(bid.points), bid.game_name),
             });
           }
-        } else if (bid.game_name === "singlePatti" || bid.game_name === "doublePatti" || bid.game_name === "triplePatti") {
+        } else if (bid.game_name === "singlePannel" || bid.game_name === "doublePannel" || bid.game_name === "triplePannel") {
           if (data.open.slice(0, 3) === bid.digit) {
             console.log("open ", bid.game_name, " ::: ", bid.userId);
             await addWinningAmount({
