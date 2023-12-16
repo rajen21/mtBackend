@@ -1,9 +1,9 @@
 const gameRates = {
     singleAnk: 9.5,
     jodi: 95,
-    singlePatti: 150,
-    doublePatti: 290,
-    triplePatti: 650,
+    singlePannel: 150,
+    doublePannel: 290,
+    triplePannel: 650,
     halfSangam: 1000,
     fullSangam: 10000,
 }
