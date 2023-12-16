@@ -14,21 +14,7 @@ export default (mongoose) => {
         type: Date,
       },
     },
-    kalyan: {
-      open: {
-        type: String,
-      },
-      close: {
-        type: String,
-      },
-      final: {
-        type: String,
-      },
-      date: {
-        type: Date,
-      },
-    },
-    kalyanMorning: {
+    kalyanDay: {
       open: {
         type: String,
       },
@@ -126,7 +112,7 @@ export default (mongoose) => {
         type: Date,
       },
     },
-    milanBazarMorning: {
+    srideviDay: {
       open: {
         type: String,
       },
@@ -140,7 +126,7 @@ export default (mongoose) => {
         type: Date,
       },
     },
-    milanBazarDay: {
+    srideviNight: {
       open: {
         type: String,
       },
@@ -154,7 +140,49 @@ export default (mongoose) => {
         type: Date,
       },
     },
-    milanBazarNight: {
+    madhurDay: {
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
+    },
+    madhurNight: {
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
+    },
+    supremeDay: {
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+      final: {
+        type: String,
+      },
+      date: {
+        type: Date,
+      },
+    },
+    supremeNight: {
       open: {
         type: String,
       },
