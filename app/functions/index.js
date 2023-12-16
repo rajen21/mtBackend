@@ -4,10 +4,12 @@ import { addWinningAmount } from "../controller/user.controller.js";
 export async function getResult(Biddings, filter, data) {
   try {
     const bids = await Biddings.find(filter);
+    console.log("chekk bids total :: ", bids.length);
     bids.forEach(async (bid) => {
       if (data.close && bid.game_type === "close") {
         if (bid.game_name === "singleAnk") {
           if (data.close[0] === bid.digit) {
+            console.log("close winner single ank", bid.userId);
             await addWinningAmount({
               userId: bid.userId,
               amount: winRates(parseFloat(bid.points), bid.game_name),
@@ -15,6 +17,7 @@ export async function getResult(Biddings, filter, data) {
           }
         } else if (bid.game_name === "jodi") {
           if (`${data.close[4]}${data.close[0]}` === bid.digit) {
+            console.log("close winner jodi", bid.userId);
             await addWinningAmount({
               userId: bid.userId,
               amount: winRates(parseFloat(bid.points), bid.game_name),
@@ -22,6 +25,7 @@ export async function getResult(Biddings, filter, data) {
           }
         } else if (bid.game_name === "singlePatti" || bid.game_name === "doublePatti" || bid.game_name === "triplePatti") {
           if (data.close.slice(0, 3) === bid.digit) {
+            console.log("close winner ", bid.game_name, " ", bid.userId);
             await addWinningAmount({
               userId: bid.userId,
               amount: winRates(parseFloat(bid.points), bid.game_name),
@@ -29,16 +33,19 @@ export async function getResult(Biddings, filter, data) {
           }
         } else if (bid.game_name === "halfSangam") {
           if (data.close === bid.digit) {
+            console.log("close winner half sangam :: ", bid.userId);
             await addWinningAmount({userId: bid.userId, amount: winRates(parseFloat(bid.points), bid.game_name)})
           }
         } else if (bid.game_name === "fullSangam") {
           if (`${data.open}${data.close}` === bid.digit) {
+            console.log("close winner full sangam ::", bid.userId);
             await addWinningAmount({userId: bid.userId, amount: winRates(parseFloat(bid.points), bid.game_name)})
           }
         }
       } else if (data.open && bid.game_type === "open") {
         if (bid.game_name === "singleAnk") {
-          if (data.open[4] === bid.digit) {
+          if (data.open[3] === bid.digit) {
+            console.log("opne winner sinlge ank :: ", bid.userId);
             await addWinningAmount({
               userId: bid.userId,
               amount: winRates(parseFloat(bid.points), bid.game_name),
@@ -46,6 +53,7 @@ export async function getResult(Biddings, filter, data) {
           }
         } else if (bid.game_name === "singlePatti" || bid.game_name === "doublePatti" || bid.game_name === "triplePatti") {
           if (data.open.slice(0, 3) === bid.digit) {
+            console.log("open ", bid.game_name, " ::: ", bid.userId);
             await addWinningAmount({
               userId: bid.userId,
               amount: winRates(parseFloat(bid.points), bid.game_name),

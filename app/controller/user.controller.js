@@ -162,7 +162,9 @@ export async function addWinningAmount(userData) {
       });
       totalAmount += parseFloat(userData.amount);
       await User.findByIdAndUpdate(userData.userId, { balance: totalAmount });
+      console.log("added winning ammount in ", userData.userId, totalAmount);
       await statement.save();
+      console.log("added statementalso");
       // { new: true }
     }
   } catch (err) {
