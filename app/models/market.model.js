@@ -14,7 +14,7 @@ export default (mongoose) => {
         type: Date,
       },
     },
-    kalyanDay: {
+    kalyan: {
       open: {
         type: String,
       },
@@ -112,7 +112,7 @@ export default (mongoose) => {
         type: Date,
       },
     },
-    srideviDay: {
+    sridevi: {
       open: {
         type: String,
       },
