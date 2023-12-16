@@ -152,6 +152,7 @@ export async function removeBalance(req, res) {
 
 export async function addWinningAmount(userData) {
   try {
+    console.log("adding winnin amount...");
     const foundUser = await User.findById(userData.userId);
     let totalAmount = parseFloat(foundUser.balance);
     if (foundUser) {

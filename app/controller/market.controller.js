@@ -2,7 +2,6 @@ import db from "../models/index.js";
 import { getResult, getMarketObj } from "../functions/index.js";
 
 const MarketData = db.marketData;
-const Biddings = db.bidding;
 
 export async function PatchMarketData(req, res) {
   const { date, ...rest } = req.body;
@@ -30,7 +29,7 @@ export async function PatchMarketData(req, res) {
                 : "",
               date: new Date(tempData[key].date).toDateString(),
             };
-            await getResult(Biddings, filter, tempData[key]);
+            await getResult(filter, tempData[key]);
             return res.send(data);
           })
           .catch((err) => res.status(500).send(err));
@@ -44,7 +43,7 @@ export async function PatchMarketData(req, res) {
               game_type: "open",
               date: new Date(tempData[key].date).toDateString(),
             };
-            await getResult(Biddings, filter, tempData[key]);
+            await getResult(filter, tempData[key]);
             return res.send(data);
           })
           .catch((err) => res.status(500).send(err));
