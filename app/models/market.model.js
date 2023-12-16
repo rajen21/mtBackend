@@ -11,7 +11,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     kalyan: {
@@ -25,7 +25,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     kalyanNight: {
@@ -39,7 +39,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     milanDay: {
@@ -53,7 +53,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     milanNight: {
@@ -67,7 +67,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     rajdhaniDay: {
@@ -81,7 +81,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     rajdhaniNight: {
@@ -95,7 +95,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     mainBazar: {
@@ -109,7 +109,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     sridevi: {
@@ -123,7 +123,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     srideviNight: {
@@ -137,7 +137,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     madhurDay: {
@@ -151,7 +151,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     madhurNight: {
@@ -165,7 +165,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     supremeDay: {
@@ -179,7 +179,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     supremeNight: {
@@ -193,7 +193,7 @@ export default (mongoose) => {
         type: String,
       },
       date: {
-        type: Date,
+        type: String,
       },
     },
     date: {
