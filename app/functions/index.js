@@ -1,8 +1,12 @@
+import db from "../models/index.js";
 import { winRates } from "./rates.js";
 import { addWinningAmount } from "../controller/user.controller.js";
 
-export async function getResult(Biddings, filter, data) {
+const Biddings = db.bidding;
+
+export async function getResult(filter, data) {
   try {
+    console.log("filter ::", filter, data);
     const bids = await Biddings.find(filter);
     console.log("chekk bids total :: ", bids.length);
     bids.forEach(async (bid) => {
@@ -16,7 +20,7 @@ export async function getResult(Biddings, filter, data) {
             });
           }
         } else if (bid.game_name === "jodi") {
-          if (`${data.close[4]}${data.close[0]}` === bid.digit) {
+          if (`${data.open[3]}${data.close[0]}` === bid.digit) {
             console.log("close winner jodi", bid.userId);
             await addWinningAmount({
               userId: bid.userId,
@@ -45,7 +49,7 @@ export async function getResult(Biddings, filter, data) {
       } else if (data.open && bid.game_type === "open") {
         if (bid.game_name === "singleAnk") {
           if (data.open[3] === bid.digit) {
-            console.log("opne winner sinlge ank :: ", bid.userId);
+            console.log("open winner sinlge ank :: ", bid.userId);
             await addWinningAmount({
               userId: bid.userId,
               amount: winRates(parseFloat(bid.points), bid.game_name),
