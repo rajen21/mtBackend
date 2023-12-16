@@ -1,6 +1,6 @@
 export default (mongoose) => {
   const schema = mongoose.Schema({
-    time: {
+    timeBazar: {
       open: {
         type: String,
       },

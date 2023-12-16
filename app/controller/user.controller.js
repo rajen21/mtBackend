@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 
 import db from "../models/index.js";
 const User = db.user;
+const Statement = db.statement;
 
 export async function createUser(req, res) {
   try {
@@ -154,8 +155,14 @@ export async function addWinningAmount(userData) {
     const foundUser = await User.findById(userData.userId);
     let totalAmount = parseFloat(foundUser.balance);
     if (foundUser) {
+      const statement = new Statement({
+        userId: userData.userId,
+        amount: userData.amount,
+        type: "Won",
+      });
       totalAmount += parseFloat(userData.amount);
-      await findByIdAndUpdate(userData.userId, { balance: totalAmount });
+      await User.findByIdAndUpdate(userData.userId, { balance: totalAmount });
+      await statement.save();
       // { new: true }
     }
   } catch (err) {
