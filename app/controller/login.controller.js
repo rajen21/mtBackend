@@ -101,7 +101,8 @@ export async function loginUser(req, res) {
 
 export async function logoutUser(req, res) {
   try {
-    jwt.sign("", "secret123");
+    jwt.sign("", "mtSecret007");
+    jwt.sign("", "mtRefreshSecret007");
     return res.json({});
   } catch (err) {
     return res.status(500).send("error while log out");
