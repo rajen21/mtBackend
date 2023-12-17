@@ -73,7 +73,7 @@ export async function loginUser(req, res) {
           active,
           balance,
         },
-        "mtRefreshSecret007",
+        "mtSecret007",
         { expiresIn: "1d" }
       );
 
@@ -102,7 +102,6 @@ export async function loginUser(req, res) {
 export async function logoutUser(req, res) {
   try {
     jwt.sign("", "mtSecret007");
-    jwt.sign("", "mtRefreshSecret007");
     return res.json({});
   } catch (err) {
     return res.status(500).send("error while log out");
@@ -115,7 +114,7 @@ export async function refreshLoginToken(req, res) {
     return res.status(401).send("Access Denied. No refresh token provided.");
   }
   try {
-    const decoded = jwt.verify(refreshToken, "mtRefreshSecret007");
+    const decoded = jwt.verify(refreshToken, "mtSecret007");
 
     const accessToken = jwt.sign(decoded, "mtSecret007", {
       expiresIn: "1h",

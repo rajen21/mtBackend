@@ -1,8 +1,17 @@
 import jwt from "jsonwebtoken";
 
+const get_cookies = function(request) {
+  var cookies = {};
+  request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
+    const parts = cookie.match(/(.*?)=(.*)$/)
+    cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+  });
+  return cookies.refreshToken;
+};
+
 export const jwtTokenValidate = async (req, res, next) => {
   const authToken = req.headers?.authorization;
-  const refreshToken = req.cookies?.refreshToken;
+  const refreshToken = get_cookies(req);
   if (!authToken && !refreshToken) {
     return res.status(401).send("Access Denied. No token provided.");
   }
@@ -17,7 +26,7 @@ export const jwtTokenValidate = async (req, res, next) => {
       return res.status(401).send("Access Denied. No refresh token provided.");
     }
     try {
-      const decoded = jwt.verify(refreshToken, "mtRefreshSecret007");
+      const decoded = jwt.verify(refreshToken, "mtSecret007");
       const accessToken = jwt.sign(decoded, "mtSecret007", { expiresIn: "1h" });
       return res
         .cookie("refreshToken", refreshToken, {
