@@ -48,7 +48,7 @@ export async function loginUser(req, res) {
 
     const isPasswordValid = await bcrypt.compare(req.body.password, password);
     if (isPasswordValid) {
-      const token = jwt.sign(
+      const accessToken = jwt.sign(
         {
           id: _id,
           user_name,
@@ -59,18 +59,38 @@ export async function loginUser(req, res) {
           active,
           balance,
         },
-        "secret123",
+        "mtSecret007",
         { expiresIn: "1h" }
       );
-      return res.send({
-        token,
-        id: _id,
-        user_name,
-        adminId,
-        agentId,
-        role,
-        active,
-      });
+      const refreshToken = jwt.sign(
+        {
+          id: _id,
+          user_name,
+          password,
+          adminId,
+          agentId,
+          role,
+          active,
+          balance,
+        },
+        "mtRefreshSecret007",
+        { expiresIn: "1d" }
+      );
+
+      return res
+        .cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          sameSite: "strict",
+        })
+        .header("Authorization", accessToken)
+        .send({
+          id: _id,
+          user_name,
+          adminId,
+          agentId,
+          role,
+          active,
+        });
     } else {
       return res.status(401).send({ password: "Worng password" });
     }
@@ -85,5 +105,23 @@ export async function logoutUser(req, res) {
     return res.json({});
   } catch (err) {
     return res.status(500).send("error while log out");
+  }
+}
+
+export async function refreshLoginToken(req, res) {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    return res.status(401).send("Access Denied. No refresh token provided.");
+  }
+  try {
+    const decoded = jwt.verify(refreshToken, "mtRefreshSecret007");
+
+    const accessToken = jwt.sign(decoded, "mtSecret007", {
+      expiresIn: "1h",
+    });
+    const { password, ...rest } = decoded;
+    return res.header("Authorization", accessToken).send(rest);
+  } catch (err) {
+    return res.status(400).send("Invalid refresh token.");
   }
 }
