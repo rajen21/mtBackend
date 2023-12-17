@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
 
-const get_cookies = function(request) {
+const get_cookies = function (request) {
   var cookies = {};
-  request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
-    const parts = cookie.match(/(.*?)=(.*)$/)
-    cookies[ parts[1].trim() ] = (parts[2] || '').trim();
-  });
+  request.headers &&
+    request.headers.cookie.split(";").forEach(function (cookie) {
+      const parts = cookie.match(/(.*?)=(.*)$/);
+      cookies[parts[1].trim()] = (parts[2] || "").trim();
+    });
   return cookies.refreshToken;
 };
 
@@ -28,14 +29,17 @@ export const jwtTokenValidate = async (req, res, next) => {
     try {
       const decoded = jwt.verify(refreshToken, "mtSecret007");
       const accessToken = jwt.sign(decoded, "mtSecret007", { expiresIn: "1h" });
-      return res
+      res
         .cookie("refreshToken", refreshToken, {
           httpOnly: true,
           sameSite: "strict",
         })
         .header("Authorization", accessToken)
         .send(decoded);
-    } catch (err) {}
-    return res.status(401).send("Access is denied due to invalid credentials.");
+    } catch (err) {
+      return res
+        .status(400)
+        .send("Invalid Token.");
+    }
   }
 };
