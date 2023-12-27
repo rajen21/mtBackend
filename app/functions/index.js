@@ -27,7 +27,11 @@ export async function getResult(filter, data) {
               amount: winRates(parseFloat(bid.points), bid.game_name),
             });
           }
-        } else if (bid.game_name === "singlePannel" || bid.game_name === "doublePannel" || bid.game_name === "triplePannel") {
+        } else if (
+          bid.game_name === "singlePannel" ||
+          bid.game_name === "doublePannel" ||
+          bid.game_name === "triplePannel"
+        ) {
           if (data.close.slice(0, 3) === bid.digit) {
             console.log("close winner ", bid.game_name, " ", bid.userId);
             await addWinningAmount({
@@ -38,12 +42,18 @@ export async function getResult(filter, data) {
         } else if (bid.game_name === "halfSangam") {
           if (data.close === bid.digit) {
             console.log("close winner half sangam :: ", bid.userId);
-            await addWinningAmount({userId: bid.userId, amount: winRates(parseFloat(bid.points), bid.game_name)})
+            await addWinningAmount({
+              userId: bid.userId,
+              amount: winRates(parseFloat(bid.points), bid.game_name),
+            });
           }
         } else if (bid.game_name === "fullSangam") {
           if (`${data.open}${data.close}` === bid.digit) {
             console.log("close winner full sangam ::", bid.userId);
-            await addWinningAmount({userId: bid.userId, amount: winRates(parseFloat(bid.points), bid.game_name)})
+            await addWinningAmount({
+              userId: bid.userId,
+              amount: winRates(parseFloat(bid.points), bid.game_name),
+            });
           }
         }
       } else if (data.open && bid.game_type === "open") {
@@ -55,7 +65,11 @@ export async function getResult(filter, data) {
               amount: winRates(parseFloat(bid.points), bid.game_name),
             });
           }
-        } else if (bid.game_name === "singlePannel" || bid.game_name === "doublePannel" || bid.game_name === "triplePannel") {
+        } else if (
+          bid.game_name === "singlePannel" ||
+          bid.game_name === "doublePannel" ||
+          bid.game_name === "triplePannel"
+        ) {
           if (data.open.slice(0, 3) === bid.digit) {
             console.log("open ", bid.game_name, " ::: ", bid.userId);
             await addWinningAmount({
@@ -101,4 +115,12 @@ export function getMarketObj(value) {
     }
   });
   return marketObj;
+}
+
+export function isMarketOpen(closeTime) {
+  return new Date().getTime() < closeTime;
+}
+
+export function isMarketOpenEnd(openTime) {
+  return new Date().getTime() < openTime;
 }
