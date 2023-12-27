@@ -76,13 +76,13 @@ export async function getSpecificDateData(req, res) {
 }
 
 export async function getMarketTime(req, res) {
-  console.log("req  :::", req.params, req.query, req.body);
-  const { name } = req.query;
-  const { openTime, closeTime } = marketNames[name];
-
-  return res.send({
-    ...marketNames[name],
-    isMarketOpen: isMarketOpen(closeTime),
-    isMarketOpenEnd: isMarketOpenEnd(openTime),
+  const filteredMarketData = marketNames.map((name) => {
+    return {
+      ...name,
+      isMarketOpen: isMarketOpen(name.closeTime),
+      isMarketOpenEnd: isMarketOpenEnd(name.openTime),
+    };
   });
+
+  return res.send(filteredMarketData);
 }
