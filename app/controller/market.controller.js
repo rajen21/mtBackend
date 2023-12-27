@@ -76,6 +76,7 @@ export async function getSpecificDateData(req, res) {
 }
 
 export async function getMarketTime(req, res) {
+  console.log("req  :::", req.params, req.query, req.body);
   const { name } = req.query;
   const { openTime, closeTime } = marketNames[name];
 
