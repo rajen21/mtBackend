@@ -6,11 +6,12 @@ const Statement = db.statement;
 
 export async function createUser(req, res) {
   try {
-    const { user_name, password, role, phone } = req.body;
+    const {  password, role, phone } = req.body;
 
-    if (!user_name) {
-      return res.status(400).send({ message: "User name is require" });
-    } else if (!password) {
+    // if (!user_name) {
+    //   return res.status(400).send({ message: "User name is require" });
+    // } else 
+    if (!password) {
       return res.status(400).send({ message: "Password is require" });
     } else if (!role) {
       return res.status(400).send({ message: "Role is require" });
@@ -20,7 +21,7 @@ export async function createUser(req, res) {
 
     const hashPass = await bcrypt.hash(req.body.password, 15);
 
-    const userData = { user_name, password: hashPass, role, phone };
+    const userData = { password: hashPass, role, phone };
     if (role === "agent") {
       const validAdminId = await User.findById(req.body.adminId);
       userData.adminId = validAdminId;
@@ -57,8 +58,8 @@ export async function findOneUser(req, res) {
 export async function getAgentAssociatedUsers(req, res) {
   try {
     const filter = { agentId: req.query.agentId };
-    if (!!req.query.user_name) {
-      filter.user_name = { $regex: new RegExp(req.query.user_name, "i") };
+    if (!!req.query.name) {
+      filter.name = { $regex: new RegExp(req.query.name, "i") };
     }
     const associatedUsers = await User.find(filter, { password: 0 });
     return res.send(associatedUsers);
