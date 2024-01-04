@@ -6,6 +6,11 @@ const User = db.user;
 
 export async function loginUser(req, res) {
   try {
+    let cred = { user_name: req.body.user_name };
+    if (req.body.phone) {
+      cred = { phone: req.body.phone };
+    }
+
     const {
       password,
       balance,
@@ -15,7 +20,7 @@ export async function loginUser(req, res) {
       agentId,
       role,
       active,
-    } = await User.findOne({ user_name: req.body.user_name });
+    } = await User.findOne(cred);
 
     if (!active) {
       return res.status(403).send({
