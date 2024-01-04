@@ -6,19 +6,21 @@ const Statement = db.statement;
 
 export async function createUser(req, res) {
   try {
-    const { user_name, password, role } = req.body;
+    const { user_name, password, role, phone } = req.body;
 
     if (!user_name) {
-      return res.status(400).send({ message: "user name is required" });
+      return res.status(400).send({ message: "User name is require" });
     } else if (!password) {
-      return res.status(400).send({ message: "password is required" });
+      return res.status(400).send({ message: "Password is require" });
     } else if (!role) {
-      return res.status(400).send({ message: "role is required" });
+      return res.status(400).send({ message: "Role is require" });
+    } else if (!phone) {
+      return res.status(400).send({ message: "Phone number is require" });
     }
 
     const hashPass = await bcrypt.hash(req.body.password, 15);
 
-    const userData = { user_name, password: hashPass, role };
+    const userData = { user_name, password: hashPass, role, phone };
     if (role === "agent") {
       const validAdminId = await User.findById(req.body.adminId);
       userData.adminId = validAdminId;
@@ -36,7 +38,7 @@ export async function createUser(req, res) {
 
     return res.send(data);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send("Error occurred while creating user");
   }
 }
 
@@ -48,7 +50,7 @@ export async function findOneUser(req, res) {
 
     return res.send(data);
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(500).send("Error occurred while finding user");
   }
 }
 
@@ -163,7 +165,12 @@ export async function addWinningAmount(userData) {
       });
       totalAmount += parseFloat(userData.amount);
       await User.findByIdAndUpdate(userData.userId, { balance: totalAmount });
-      console.log("added winning ammount in ", userData.userId, totalAmount, userData.amount);
+      console.log(
+        "added winning ammount in ",
+        userData.userId,
+        totalAmount,
+        userData.amount
+      );
       await statement.save();
       console.log("added statementalso");
       // { new: true }

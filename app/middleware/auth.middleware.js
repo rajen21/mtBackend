@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const get_cookies = function (request) {
-  var cookies = {};
+  let cookies = {};
   request.headers &&
     request.headers.cookie.split(";").forEach(function (cookie) {
       const parts = cookie.match(/(.*?)=(.*)$/);
@@ -12,8 +12,11 @@ const get_cookies = function (request) {
 
 export const jwtTokenValidate = async (req, res, next) => {
   const authToken = req.headers?.authorization;
-  const refreshToken = get_cookies(req);
-  if (!authToken && !refreshToken) {
+  // const refreshToken = get_cookies(req);
+  // if (!authToken && !refreshToken) {
+  //   return res.status(401).send("Access Denied. No token provided.");
+  // }
+  if (!authToken) {
     return res.status(401).send("Access Denied. No token provided.");
   }
   try {
@@ -23,23 +26,24 @@ export const jwtTokenValidate = async (req, res, next) => {
       next();
     }
   } catch (Err) {
-    if (!refreshToken) {
-      return res.status(401).send("Access Denied. No refresh token provided.");
-    }
-    try {
-      const decoded = jwt.verify(refreshToken, "mtSecret007");
-      const accessToken = jwt.sign(decoded, "mtSecret007", { expiresIn: "1h" });
-      res
-        .cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          sameSite: "strict",
-        })
-        .header("Authorization", accessToken)
-        .send(decoded);
-    } catch (err) {
-      return res
-        .status(400)
-        .send("Invalid Token.");
-    }
+    return res.status(500).send("No token provided.");
+    // if (!refreshToken) {
+    //   return res.status(401).send("Access Denied. No refresh token provided.");
+    // }
+    // try {
+    //   const decoded = jwt.verify(refreshToken, "mtSecret007");
+    //   const accessToken = jwt.sign(decoded, "mtSecret007", { expiresIn: "1h" });
+    //   res
+    //     .cookie("refreshToken", refreshToken, {
+    //       httpOnly: true,
+    //       sameSite: "strict",
+    //     })
+    //     .header("Authorization", accessToken)
+    //     .send(decoded);
+    // } catch (err) {
+    //   return res
+    //     .status(400)
+    //     .send("Invalid Token.");
+    // }
   }
 };

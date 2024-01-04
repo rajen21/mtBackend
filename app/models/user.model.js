@@ -12,6 +12,13 @@ export default (mongoose) => {
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      required: true,
+      maxLength: 13,
+      unique: true,
+      validate: /^(?:(\+?91)|0)?([6-9]\d{9})$/
+    },
     adminId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
