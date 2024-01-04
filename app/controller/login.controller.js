@@ -59,38 +59,40 @@ export async function loginUser(req, res) {
           active,
           balance,
         },
-        "mtSecret007",
-        { expiresIn: "1h" }
+        "mtSecret007"
+        // { expiresIn: "1h" }
       );
-      const refreshToken = jwt.sign(
-        {
-          id: _id,
-          user_name,
-          password,
-          adminId,
-          agentId,
-          role,
-          active,
-          balance,
-        },
-        "mtSecret007",
-        { expiresIn: "1d" }
-      );
+      // const refreshToken = jwt.sign(
+      //   {
+      //     id: _id,
+      //     user_name,
+      //     password,
+      //     adminId,
+      //     agentId,
+      //     role,
+      //     active,
+      //     balance,
+      //   },
+      //   "mtSecret007",
+      //   // { expiresIn: "1d" }
+      // );
 
-      return res
-        .cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          sameSite: "strict",
-        })
-        .header("Authorization", accessToken)
-        .send({
-          id: _id,
-          user_name,
-          adminId,
-          agentId,
-          role,
-          active,
-        });
+      return (
+        res
+          // .cookie("refreshToken", refreshToken, {
+          //   httpOnly: true,
+          //   sameSite: "strict",
+          // })
+          .header("Authorization", accessToken)
+          .send({
+            id: _id,
+            user_name,
+            adminId,
+            agentId,
+            role,
+            active,
+          })
+      );
     } else {
       return res.status(401).send({ password: "Worng password" });
     }
@@ -108,20 +110,32 @@ export async function logoutUser(req, res) {
   }
 }
 
-export async function refreshLoginToken(req, res) {
-  const refreshToken = req.cookies.refreshToken;
-  if (!refreshToken) {
-    return res.status(401).send("Access Denied. No refresh token provided.");
-  }
+export async function isUserExist(req, res) {
   try {
-    const decoded = jwt.verify(refreshToken, "mtSecret007");
-
-    const accessToken = jwt.sign(decoded, "mtSecret007", {
-      expiresIn: "1h",
-    });
-    const { password, ...rest } = decoded;
-    return res.header("Authorization", accessToken).send(rest);
+    if (!req.body.phone) {
+      return res.status(400).send("Phone number is required");
+    }
+    const user = await User.find({ phone: req.body.phone });
+    return res.send({ isUserExist: !!user.user_name });
   } catch (err) {
-    return res.status(400).send("Invalid refresh token.");
+    return res.status(500).send("Error occurred while finding user");
   }
 }
+
+// export async function refreshLoginToken(req, res) {
+//   const refreshToken = req.cookies.refreshToken;
+//   if (!refreshToken) {
+//     return res.status(401).send("Access Denied. No refresh token provided.");
+//   }
+//   try {
+//     const decoded = jwt.verify(refreshToken, "mtSecret007");
+
+//     const accessToken = jwt.sign(decoded, "mtSecret007", {
+//       expiresIn: "1h",
+//     });
+//     const { password, ...rest } = decoded;
+//     return res.header("Authorization", accessToken).send(rest);
+//   } catch (err) {
+//     return res.status(400).send("Invalid refresh token.");
+//   }
+// }
