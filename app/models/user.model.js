@@ -3,10 +3,14 @@ import mongooseUniqueValidator from "mongoose-unique-validator";
 export default (mongoose) => {
   const uniqueValidator = mongooseUniqueValidator;
   const schema = mongoose.Schema({
-    user_name: {
+    // user_name: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    // },
+    name: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -17,7 +21,7 @@ export default (mongoose) => {
       required: true,
       maxLength: 13,
       unique: true,
-      validate: /^(?:(\+?91)|0)?([6-9]\d{9})$/
+      validate: /^(?:(\+?91)|0)?([6-9]\d{9})$/,
     },
     adminId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -34,12 +38,12 @@ export default (mongoose) => {
     },
     active: {
       type: Boolean,
-      default: false
+      default: false,
     },
     balance: {
       type: Number,
       default: 0,
-    }
+    },
   });
   schema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();

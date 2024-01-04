@@ -6,21 +6,23 @@ const User = db.user;
 
 export async function loginUser(req, res) {
   try {
-    let cred = { user_name: req.body.user_name };
-    if (req.body.phone) {
-      cred = { phone: req.body.phone };
-    }
+    // let cred = { user_name: req.body.user_name };
+    // if (req.body.phone) {
+    //   cred = { phone: req.body.phone };
+    // }
 
     const {
       password,
       balance,
       _id,
-      user_name,
+      // user_name,
+      name,
       adminId,
+      phone,
       agentId,
       role,
       active,
-    } = await User.findOne(cred);
+    } = await User.findOne({phone: req.body.phone});
 
     if (!active) {
       return res.status(403).send({
@@ -56,7 +58,9 @@ export async function loginUser(req, res) {
       const accessToken = jwt.sign(
         {
           id: _id,
-          user_name,
+          // user_name,
+          phone,
+          name,
           password,
           adminId,
           agentId,
@@ -91,7 +95,9 @@ export async function loginUser(req, res) {
           .header("Authorization", accessToken)
           .send({
             id: _id,
-            user_name,
+            // user_name,
+            phone,
+            name,
             adminId,
             agentId,
             role,
@@ -102,7 +108,7 @@ export async function loginUser(req, res) {
       return res.status(401).send({ password: "Worng password" });
     }
   } catch (err) {
-    return res.status(404).send({ user_name: "Incorrect username" });
+    return res.status(404).send({ phone: "Incorrect Phone number" });
   }
 }
 
@@ -121,7 +127,7 @@ export async function isUserExist(req, res) {
       return res.status(400).send("Phone number is required");
     }
     const user = await User.find({ phone: req.body.phone });
-    return res.send({ isUserExist: !!user.user_name });
+    return res.send({ isUserExist: !!user.phone });
   } catch (err) {
     return res.status(500).send("Error occurred while finding user");
   }
