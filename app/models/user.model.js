@@ -23,14 +23,6 @@ export default (mongoose) => {
       unique: true,
       validate: /^(?:(\+?91)|0)?([6-9]\d{9})$/,
     },
-    adminId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-    },
-    agentId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-    },
     role: {
       type: String,
       enum: ["user", "agent", "admin"],
@@ -44,6 +36,14 @@ export default (mongoose) => {
       type: Number,
       default: 0,
     },
+    // adminId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "users",
+    // },
+    // agentId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "users",
+    // },
   });
   schema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
