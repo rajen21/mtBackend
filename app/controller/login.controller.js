@@ -6,11 +6,6 @@ const User = db.user;
 
 export async function loginUser(req, res) {
   try {
-    // let cred = { user_name: req.body.user_name };
-    // if (req.body.phone) {
-    //   cred = { phone: req.body.phone };
-    // }
-
     const {
       password,
       balance,
@@ -127,7 +122,11 @@ export async function isUserExist(req, res) {
       return res.status(400).send("Phone number is required");
     }
     const user = await User.find({ phone: req.body.phone });
-    return res.send({ isUserExist: !!user.phone });
+    let response = { action: "register" };
+    if (user.phone) {
+      response.action = "login";
+    }
+    return res.send(response);
   } catch (err) {
     return res.status(500).send("Error occurred while finding user");
   }
