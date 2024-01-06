@@ -17,7 +17,7 @@ export async function loginUser(req, res) {
       agentId,
       role,
       active,
-    } = await User.findOne({phone: req.body.phone});
+    } = await User.findOne({ phone: req.body.phone });
 
     if (!active) {
       return res.status(403).send({
@@ -122,10 +122,7 @@ export async function isUserExist(req, res) {
       return res.status(400).send("Phone number is required");
     }
     const user = await User.find({ phone: req.body.phone });
-    let response = { action: "register" };
-    if (user.phone) {
-      response.action = "login";
-    }
+    let response = { action: user.phone ? "login" : "register" };
     return res.send(response);
   } catch (err) {
     return res.status(500).send("Error occurred while finding user");
