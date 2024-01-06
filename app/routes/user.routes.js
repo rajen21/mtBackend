@@ -16,7 +16,7 @@ export default (app) => {
   const router = Router();
   router.get("/associated-users", jwtTokenValidate, getAgentAssociatedUsers);
   router.get("/:id", jwtTokenValidate, findOneUser);
-  router.post("/", validUser(createUserSchema), jwtTokenValidate,createUser,);
+  router.post("/", validUser(createUserSchema),createUser);
   router.patch("/add-balance/:id", jwtTokenValidate, addBalance);
   router.patch("/remove-balance/:id", jwtTokenValidate, removeBalance);
   router.patch("/:id", jwtTokenValidate, updateUser);
