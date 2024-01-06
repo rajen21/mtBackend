@@ -20,10 +20,9 @@ export async function createUser(req, res) {
     if (!/^(?:(\+?91)|0)?([6-9]\d{9})$/.test(phone)) {
       return res.status(400).send({ message: "Phone number is invalid" });
     }
+    const hashPass = await bcrypt.hash(password, 15);
 
-    const hashPass = await bcrypt.hash(req.body.password, 15);
-
-    const userData = { password: hashPass, role, phone, active: true };
+    const userData = { name, password: hashPass, role, phone, active: true };
 
     const user = new User(userData);
 
@@ -31,7 +30,10 @@ export async function createUser(req, res) {
 
     return res.send(data);
   } catch (err) {
-    res.status(500).send("Error occurred while creating user");
+    if (err.errors.phone.properties.message) {
+      return res.status(500).send(err.errors.phone.properties.message);
+    }
+    return res.status(500).send("Error occurred while creating user");
   }
 }
 
