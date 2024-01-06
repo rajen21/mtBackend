@@ -17,7 +17,7 @@ export async function createUser(req, res) {
     } else if (!phone) {
       return res.status(400).send({ message: "Phone number is require" });
     }
-    if (/^(?:(\+?91)|0)?([6-9]\d{9})$/.test(phone)) {
+    if (!/^(?:(\+?91)|0)?([6-9]\d{9})$/.test(phone)) {
       return res.status(400).send({ message: "Phone number is invalid" });
     }
 
