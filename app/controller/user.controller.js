@@ -6,32 +6,24 @@ const Statement = db.statement;
 
 export async function createUser(req, res) {
   try {
-    const {  password, role, phone } = req.body;
+    const { name, password, role, phone } = req.body;
 
-    // if (!user_name) {
-    //   return res.status(400).send({ message: "User name is require" });
-    // } else 
-    if (!password) {
+    if (!name) {
+      return res.status(400).send({ message: "Name is require" });
+    } else if (!password) {
       return res.status(400).send({ message: "Password is require" });
     } else if (!role) {
       return res.status(400).send({ message: "Role is require" });
     } else if (!phone) {
       return res.status(400).send({ message: "Phone number is require" });
     }
+    if (/^(?:(\+?91)|0)?([6-9]\d{9})$/.test(phone)) {
+      return res.status(400).send({ message: "Phone number is invalid" });
+    }
 
     const hashPass = await bcrypt.hash(req.body.password, 15);
 
-    const userData = { password: hashPass, role, phone };
-    if (role === "agent") {
-      const validAdminId = await User.findById(req.body.adminId);
-      userData.adminId = validAdminId;
-    }
-    if (role === "user") {
-      const validAdminId = await User.findById(req.body.adminId);
-      const validAgentId = await User.findById(req.body.agentId);
-      userData.agentId = validAgentId;
-      userData.adminId = validAdminId;
-    }
+    const userData = { password: hashPass, role, phone, active: true };
 
     const user = new User(userData);
 
