@@ -87,7 +87,7 @@ export async function getMarketTime(req, res) {
     return {
       ...name,
       isMarketOpen: isMarketOpen(name.closeTime, new Date(getTime.dateTime)),
-      isMarketOpenEnd: !isMarketOpenEnd(
+      isMarketOpenEnd: isMarketOpenEnd(
         name.openTime,
         new Date(getTime.dateTime)
       ),
