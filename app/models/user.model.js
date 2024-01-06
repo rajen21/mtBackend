@@ -16,7 +16,6 @@ export default (mongoose) => {
       required: true,
       maxLength: 13,
       unique: true,
-      validate: /^(?:(\+?91)|0)?([6-9]\d{9})$/,
     },
     role: {
       type: String,
@@ -37,7 +36,7 @@ export default (mongoose) => {
     object.id = _id;
     return object;
   });
-  schema.plugin(uniqueValidator);
+  schema.plugin(uniqueValidator, { message: '{VALUE} is already exists, Please use different {PATH} number' });
   const User = mongoose.model("users", schema);
   return User;
 };
