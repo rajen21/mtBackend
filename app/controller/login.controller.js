@@ -122,7 +122,10 @@ export async function isUserExist(req, res) {
       return res.status(400).send("Phone number is required");
     }
     const user = await User.find({ phone: req.body.phone });
-    let response = { action: user.phone ? "login" : "register" };
+    const response = { action: "register" };
+    if (user.length) {
+      response.action = "login";
+    }
     return res.send(response);
   } catch (err) {
     return res.status(500).send("Error occurred while finding user");
