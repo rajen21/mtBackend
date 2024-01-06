@@ -117,10 +117,10 @@ export function getMarketObj(value) {
   return marketObj;
 }
 
-export function isMarketOpen(closeTime) {
-  return new Date().getTime() < closeTime;
+export function isMarketOpen(closeTime, now) {
+  return now.getTime() < closeTime;
 }
 
-export function isMarketOpenEnd(openTime) {
-  return new Date().getTime() < openTime;
+export function isMarketOpenEnd(openTime, now) {
+  return now.getTime() < openTime;
 }
