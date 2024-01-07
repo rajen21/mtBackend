@@ -62,7 +62,6 @@ export async function findUsers(req, res) {
       filter.role = filter.searchRole;
       delete filter.searchRole;
     }
-    console.log("checkk filter", filter);
     const associatedUsers = await User.find(filter, { password: 0 });
     return res.send(associatedUsers);
   } catch (err) {
