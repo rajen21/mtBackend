@@ -86,7 +86,7 @@ export async function getMarketTime(req, res) {
     getTime = await fetch(`${process.env.TIME_URL}`, {headers: { accept: "application/json" }});
     getTime = await getTime.json();
   }
-  console.log("checkkk time", new Date().toLocaleString(), "\n",new Date(getTime.date), "\n", setTime(getTime.date, 12, 55));
+  console.log("checkkk time", new Date().toLocaleString(), "\n",new Date(getTime.date), "\n", setTime(getTime.date, 12, 55, 0));
   const filteredMarketData = marketNames.map((name) => {
     const opTime = setTime(getTime.date, name.openTime.hh, name.openTime.mm, 0);
     const clTime = setTime(getTime.date, name.closeTime.hh, name.closeTime.mm, 0);
