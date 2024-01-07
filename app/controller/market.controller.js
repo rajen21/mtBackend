@@ -75,22 +75,23 @@ export async function getSpecificDateData(req, res) {
     );
 }
 
+function setTime(date, h, m, s) {
+  return new Date(date).setHours(h, m, s);
+}
+
 export async function getMarketTime(req, res) {
   let getTime = new Date();
   if (process.env.TIME_URL) {
-    getTime = await fetch(`${process.env.TIME_URL}`, {
-      headers: { accept: "application/json" },
-    });
+    getTime = await fetch(`${process.env.TIME_URL}`, {headers: { accept: "application/json" }});
     getTime = await getTime.json();
   }
   const filteredMarketData = marketNames.map((name) => {
+    const opTime = setTime(getTime.dateTime, name.openTime.hh, name.openTime.mm, name.openTime.ss);
+    const clTime = setTime(getTime.dateTime, name.closeTime.hh, name.closeTime.mm, name.closeTime.ss);
     return {
       ...name,
-      isMarketOpen: isMarketOpen(name.closeTime, new Date(getTime.dateTime)),
-      isMarketOpenEnd: isMarketOpenEnd(
-        name.openTime,
-        new Date(getTime.dateTime)
-      ),
+      isMarketOpen: isMarketOpen(clTime, new Date(getTime.dateTime)),
+      isMarketOpenEnd: isMarketOpenEnd(opTime, new Date(getTime.dateTime)),
     };
   });
 
