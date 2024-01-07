@@ -51,15 +51,16 @@ export async function findOneUser(req, res) {
 
 export async function findUsers(req, res) {
   try {
-    const filter = req.query;
-    if (filter.query.role === "user") {
+    const filter = {...req.query};
+    if (filter.role === "user") {
       return res.status(403).send("Users do not have access to these");
     }
-    if (!!req.query.name) {
+    if (!!filter.name) {
       filter.name = { $regex: new RegExp(req.query.name, "i") };
     }
     if (filter.searchRole) {
       filter.role = filter.searchRole;
+      delete filter.searchRole;
     }
     const associatedUsers = await User.find(filter, { password: 0 });
     return res.send(associatedUsers);
