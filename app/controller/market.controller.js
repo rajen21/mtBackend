@@ -80,23 +80,22 @@ function setTime(date, h, m, s) {
 }
 
 export async function getMarketTime(req, res) {
-  const filter = {...req.query};
-  // let getTime = new Date();
-  // if (process.env.TIME_URL) {
-  //   getTime = await fetch(`${process.env.TIME_URL}`, {headers: { accept: "application/json" }});
-  //   getTime = await getTime.json();
-  // }
-  console.log("checkkk time", new Date().toLocaleString(), "\n",new Date(filter.dateTime), "\n", setTime(filter.dateTime, 12, 55));
-  console.log("param", req.params, req.query);
+  // const filter = {...req.query};
+  let getTime = new Date();
+  if (process.env.TIME_URL) {
+    getTime = await fetch(`${process.env.TIME_URL}`, {headers: { accept: "application/json" }});
+    getTime = await getTime.json();
+  }
+  console.log("checkkk time", new Date().toLocaleString(), "\n",new Date(getTime.date), "\n", setTime(getTime.date, 12, 55));
   const filteredMarketData = marketNames.map((name) => {
-    const opTime = setTime(filter.dateTime, name.openTime.hh, name.openTime.mm, 0);
-    const clTime = setTime(filter.dateTime, name.closeTime.hh, name.closeTime.mm, 0);
+    const opTime = setTime(getTime.date, name.openTime.hh, name.openTime.mm, 0);
+    const clTime = setTime(getTime.date, name.closeTime.hh, name.closeTime.mm, 0);
     return {
       ...name,
       openTime: opTime,
       closeTime: clTime,
-      isMarketOpen: isMarketOpen(clTime, new Date(filter.dateTime)),
-      isMarketOpenEnd: isMarketOpenEnd(opTime, new Date(filter.dateTime)),
+      isMarketOpen: isMarketOpen(clTime, new Date(getTime.date)),
+      isMarketOpenEnd: isMarketOpenEnd(opTime, new Date(getTime.date)),
     };
   });
 
