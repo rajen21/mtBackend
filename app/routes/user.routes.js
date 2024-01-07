@@ -7,16 +7,16 @@ import {
   deleteUser,
   findOneUser,
   updateUser,
-  getAgentAssociatedUsers,
+  findUsers,
   addBalance,
   removeBalance,
 } from "../controller/user.controller.js";
 
 export default (app) => {
   const router = Router();
-  router.get("/associated-users", jwtTokenValidate, getAgentAssociatedUsers);
+  router.get("/find-users", jwtTokenValidate, findUsers);
   router.get("/:id", jwtTokenValidate, findOneUser);
-  router.post("/", validUser(createUserSchema),createUser);
+  router.post("/", validUser(createUserSchema), createUser);
   router.patch("/add-balance/:id", jwtTokenValidate, addBalance);
   router.patch("/remove-balance/:id", jwtTokenValidate, removeBalance);
   router.patch("/:id", jwtTokenValidate, updateUser);

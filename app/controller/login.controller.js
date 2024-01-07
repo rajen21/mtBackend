@@ -10,9 +10,7 @@ export async function loginUser(req, res) {
       password,
       balance,
       _id,
-      // user_name,
       name,
-      // adminId,
       phone,
       role,
       active,
@@ -81,10 +79,10 @@ export async function loginUser(req, res) {
           })
       );
     } else {
-      return res.status(401).send({ password: "Worng password" });
+      return res.status(401).send("Worng password");
     }
   } catch (err) {
-    return res.status(404).send({ phone: "Incorrect Phone number" });
+    return res.status(404).send("Incorrect Phone number");
   }
 }
 
