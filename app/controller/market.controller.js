@@ -90,6 +90,8 @@ export async function getMarketTime(req, res) {
     const clTime = setTime(getTime.dateTime, name.closeTime.hh, name.closeTime.mm, name.closeTime.ss);
     return {
       ...name,
+      openTime: opTime,
+      closeTime: clTime,
       isMarketOpen: isMarketOpen(clTime, new Date(getTime.dateTime)),
       isMarketOpenEnd: isMarketOpenEnd(opTime, new Date(getTime.dateTime)),
     };
