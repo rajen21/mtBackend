@@ -86,8 +86,8 @@ export async function getMarketTime(req, res) {
     getTime = await getTime.json();
   }
   const filteredMarketData = marketNames.map((name) => {
-    const opTime = setTime(getTime.dateTime, name.openTime.hh, name.openTime.mm, name.openTime.ss);
-    const clTime = setTime(getTime.dateTime, name.closeTime.hh, name.closeTime.mm, name.closeTime.ss);
+    const opTime = setTime(getTime.dateTime, name.openTime.hh, name.openTime.mm, 0);
+    const clTime = setTime(getTime.dateTime, name.closeTime.hh, name.closeTime.mm, 0);
     return {
       ...name,
       openTime: opTime,
